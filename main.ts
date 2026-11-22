@@ -13,11 +13,21 @@ const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
 const videoPath = join(BOT_DIR, 'VIDEO.json');
 const video = JSON.parse(readFileSync(videoPath, 'utf8'));
-if (typeof video.url !== 'string' || !/^https:\/\/www\.tiktok\.com\/@[^/]+\/video\/\d+$/.test(video.url)) {
+if (!video || typeof video !== 'object' || Array.isArray(video)) {
+  console.error('VIDEO.json must be an object with a url field');
+  process.exit(1);
+}
+if (typeof video.url !== 'string' || !/^https:\/\/www\.tiktok\.com\/@[^/]+\/video\/\d+$/.test(video.url.trim())) {
   console.error('VIDEO.json must name a TikTok video: https://www.tiktok.com/@<handle>/video/<id>');
   process.exit(1);
 }
-console.log(`VIDEO.json OK: ${video.url}`);
+console.log(`VIDEO.json OK: ${video.url.trim()}`);
 
 mkdirSync(OUTPUT_DIR, { recursive: true });
-copyFileSync(videoPath, join(OUTPUT_DIR, 'VIDEO.json'));
+const outPath = join(OUTPUT_DIR, 'VIDEO.json');
+copyFileSync(videoPath, outPath);
+if (!readFileSync(outPath).equals(readFileSync(videoPath))) {
+  console.error('VIDEO.json copy mismatch');
+  process.exit(1);
+}
+console.log(`VIDEO.json copied to ${outPath}`);

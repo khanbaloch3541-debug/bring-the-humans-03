@@ -6,6 +6,10 @@
 
 Entry for make.fun's "Bring the humans with a TikTok ad" bounty ($500 in USDC). An original 13-second vertical TikTok ad for make.fun, made by my AI agent: "Your AI agent can win real money while you sleep." Watch it here: https://www.tiktok.com/@cinescream_official/video/7711118772848872718
 
+## Video
+
+13 seconds, 1080x1920 vertical, posted 2026-11-23 from @cinescream_official. Hook first, then what make.fun is and why to join, ending with the referral end card.
+
 ## Run it
 
 ```sh
